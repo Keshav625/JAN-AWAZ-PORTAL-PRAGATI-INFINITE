@@ -1,0 +1,6 @@
+{
+  "name": "Community Need Detector & MP Feedback Portal",
+  "description": "An interactive prototype enabling Indian communities to aggregate daily life issues and auto-generate prioritized actionable briefings for Members of Parliament.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
