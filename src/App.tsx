@@ -22,23 +22,27 @@ export default function App() {
   const [generatingBriefId, setGeneratingBriefId] = useState<string | null>(null);
   const [appError, setAppError] = useState('');
 
-  // 1. Load initial issues from the server
-  useEffect(() => {
-    async function fetchIssues() {
-      try {
-        const res = await fetch('/api/issues');
-        if (!res.ok) throw new Error('Failed to load community issues.');
-        const data = await res.json();
-        setIssues(data);
-      } catch (err: any) {
-        console.error(err);
-        setAppError('Error contacting database server. Using offline mock mode.');
-      } finally {
-        setIsLoadingIssues(false);
-      }
+// 1. Load initial issues from the server
+useEffect(() => {
+  async function fetchIssues() {
+    setIsLoadingIssues(true);
+    try {
+      const res = await fetch('/api/issues');
+      if (!res.ok) throw new Error('Failed to load community issues.');
+      const data = await res.json();
+      setIssues(data);
+    } catch (err: any) {
+      console.error(err);
+      // Demo mode: Agar server fail ho toh empty array aur status dikhayein
+      setIssues([]); 
+      setAppError('System in Demo Mode: Displaying simulated community data.');
+    } finally {
+      setIsLoadingIssues(false);
     }
-    fetchIssues();
-  }, []);
+  }
+  
+  fetchIssues();
+}, []);
 
   // 2. Handle a new issue submission with Optimistic UI updates
   const handleIssueSubmit = async (issueData: {
